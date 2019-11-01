@@ -494,7 +494,7 @@ void coaster() {
           if(start) {
             start = 0;
             thisTan = calcNormTangent(&currentPoint);
-            thisNorm = crossProduct({3,2,1}, thisTan);
+            thisNorm = crossProduct({0,2,0}, thisTan);
             thisB = crossProduct(thisTan, thisNorm);
             storeBinormals[CoasterLength] = thisB;
             storeNorms[CoasterLength] = thisNorm;
