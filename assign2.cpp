@@ -310,8 +310,8 @@ void drawSideplanes() {
 }
 
 point calcNormTangent(const point* nextPoint) {
-  double magnitude = pow((pow(nextPoint->x, 2) + pow(nextPoint->y, 2) + pow(nextPoint->z, 2)), 0.5);
-  return {nextPoint->x/magnitude, nextPoint->y/magnitude, nextPoint->z/magnitude};
+  double magnitude = pow((pow(nextPoint->xP, 2) + pow(nextPoint->yP, 2) + pow(nextPoint->zP, 2)), 0.5);
+  return {nextPoint->xP/magnitude, nextPoint->yP/magnitude, nextPoint->zP/magnitude};
 }
 
 point calculateNormal(point currTangent, point prevBinorm) {
