@@ -510,7 +510,7 @@ void coaster() {
       }
       alreadyGenerated = 1;
     }
-    glColor3f(1,1,1);
+    glColor3f( 0.5, 0.5, 0.5);
 
     for(int i = 0; i < CoasterLength-1; i++) {
         point v0 = calcVectorPoints(i, -1, 1, 0.001, 0);
@@ -625,7 +625,6 @@ void display(void) {
 
     glPushMatrix();
     // glTranslatef(50,50,-100);
-    glRotated(180, 0,0,1);
     drawSideplanes();
     glPopMatrix();
 
