@@ -59,6 +59,8 @@ struct spline *g_Splines;
 int g_iNumOfSplines;
 
 Pic * planeData;
+Pic * sideData;
+Pic * topData;
 
 void mouseTranslate() {
       glTranslatef(g_vLandTranslate[0], g_vLandTranslate[1], g_vLandTranslate[2]);
@@ -240,73 +242,204 @@ point splineVertice(point* c1, point* c2, point* c3, point* c4, double u) {
 
 
 void drawSideplanes() {
-  int scale = 100;
+  double scale = 4;
+  int positioning = planeData->nx/(2*scale);
+  int height = planeData->nx;
 
+  glPushMatrix();
   glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-  for(int i = 0; i < 99; i++) {
+  for(int i = 0; i < height-1; i++) {
     glBegin(GL_TRIANGLE_STRIP);
-    for(int j = 0; j < 100; j++) {
-      glColor3f(0, 0, 139);
-      glVertex3f(scale*(j - 50.0)/100, scale*(i - 50.0)/100, scale*(-0.5));
-      glColor3f(0, 0, 139);
-      glVertex3f(scale*(j - 50.0)/100, scale*(i - 50.0 + 1)/100, scale*-0.5);
-    }
-    glEnd();
-  }
+    for(int j = 0; j < height; j++) {
+      unsigned char Red1 = PIC_PIXEL(sideData, j,i,0);
+      unsigned char Green1 = PIC_PIXEL(sideData, j,i,1);
+      unsigned char Blue1 = PIC_PIXEL(sideData, j,i,2);
 
-  for(int i = 0; i < 99; i++) {
-    glBegin(GL_TRIANGLE_STRIP);
-    for(int j = 0; j < 100; j++) {
-      glColor3f(i*128, 0, 256);
-      glVertex3f(scale*(j - 50.0)/100, scale*-0.5, scale*(i - 50.0)/100);
-      glColor3f((i+1)*128, 0, 256);
-      glVertex3f(scale*(j - 50.0)/100, scale*-0.5, scale*(i - 50.0 + 1)/100);
-    }
-    glEnd();
-  }
+      unsigned char Red2 = PIC_PIXEL(sideData, j,i+1,0);
+      unsigned char Green2 = PIC_PIXEL(sideData, j,i+1,1);
+      unsigned char Blue2 = PIC_PIXEL(sideData, j,i+1,2);
 
-  for(int i = 0; i < 99; i++) {
-    glBegin(GL_TRIANGLE_STRIP);
-    for(int j = 0; j < 100; j++) {
-      glColor3f(128, 0, 256);
-      glVertex3f(scale*(j - 50.0)/100, scale*(0.5 - 0.01), scale*(i - 50.0)/100);
-      glColor3f(128, 0, 256);
-      glVertex3f(scale*(j - 50.0)/100, scale*(0.5 - 0.01), scale*(i - 50.0 + 1)/100);
-    }
-    glEnd();
-  }
 
-  for(int i = 0; i < 99; i++) {
-    glBegin(GL_TRIANGLE_STRIP);
-    for(int j = 0; j < 100; j++) {
-      glColor3f(128, 0, 0);
-      glVertex3f(scale*-0.5, scale*(j - 50.0)/100, scale*(i - 50.0)/100);
-      glColor3f(128, 0, 0);
-      glVertex3f(scale*-0.5, scale*(j - 50.0 )/100, scale*(i - 50.0 + 1)/100);
-    }
-    glEnd();
-  }
 
-  for(int i = 0; i < 99; i++) {
-    glBegin(GL_TRIANGLE_STRIP);
-    for(int j = 0; j < 100; j++) {
-      glColor3f(128, 0, 0);
-      glVertex3f(scale*(0.5 - 0.01), scale*(j - 50.0)/100, scale*(i - 50.0)/100);
-      glColor3f(128, 0, 0);
-      glVertex3f(scale*(0.5 - 0.01), scale*(j - 50.0 )/100, scale*(i - 50.0 + 1)/100);
+      glColor3f((float)Red1/255, (float)Green1/255,(float)Blue1/255);
+      glVertex3f((j)/scale - positioning, (i)/scale - positioning, -positioning);
+      glColor3f((float)Red2/255, (float)Green2/255, (float)Blue2/255);
+      glVertex3f((j)/scale - positioning, (i +1)/scale - positioning, -positioning);
     }
     glEnd();
   }
-    for(int i = 0; i < 99; i++) {
+  glPopMatrix();
+  // glPopMatrix();
+  // for(int i = 0; i < 99; i++) {
+  //   glBegin(GL_TRIANGLE_STRIP);
+  //   for(int j = 0; j < 100; j++) {
+  //     glColor3f(i*128, 0, 256);
+  //     glVertex3f(scale*(j - 50.0)/100, scale*-0.5, scale*(i - 50.0)/100);
+  //     glColor3f((i+1)*128, 0, 256);
+  //     glVertex3f(scale*(j - 50.0)/100, scale*-0.5, scale*(i - 50.0 + 1)/100);
+  //   }
+  //   glEnd();
+  // }
+
+  glPushMatrix();
+  for(int i = 0; i < height-1; i++) {
     glBegin(GL_TRIANGLE_STRIP);
-    for(int j = 0; j < 100; j++) {
-      glColor3f(0, 0, 139);
-      glVertex3f(scale*(j - 50.0)/100, scale*(i - 50.0)/100, scale*(0.5 - 0.01));
-      glColor3f(0, 0, 139);
-      glVertex3f(scale*(j - 50.0)/100, scale*(i - 50.0 + 1)/100, scale*(0.5 - 0.01));
+    for(int j = 0; j < height; j++) {
+      unsigned char Red1 = PIC_PIXEL(topData, j,i,0);
+      unsigned char Green1 = PIC_PIXEL(topData, j,i,1);
+      unsigned char Blue1 = PIC_PIXEL(topData, j,i,2);
+
+      unsigned char Red2 = PIC_PIXEL(topData, j,i+1,0);
+      unsigned char Green2 = PIC_PIXEL(topData, j,i+1,1);
+      unsigned char Blue2 = PIC_PIXEL(topData, j,i+1,2);
+
+
+
+      glColor3f((float)Red1/255, (float)Green1/255,(float)Blue1/255);
+      glVertex3f((j)/scale - positioning, -positioning, (i)/scale-positioning);
+      glColor3f((float)Red2/255, (float)Green2/255, (float)Blue2/255);
+      glVertex3f((j)/scale - positioning, -positioning, (i+1)/scale - positioning);
     }
     glEnd();
   }
+  glPopMatrix();
+  // glPopMatrix();
+  // for(int i = 0; i < 99; i++) {
+  //   glBegin(GL_TRIANGLE_STRIP);
+  //   for(int j = 0; j < 100; j++) {
+  //     glColor3f(128, 0, 256);
+  //     glVertex3f(scale*(j - 50.0)/100, scale*(0.5 - 0.01), scale*(i - 50.0)/100);
+  //     glColor3f(128, 0, 256);
+  //     glVertex3f(scale*(j - 50.0)/100, scale*(0.5 - 0.01), scale*(i - 50.0 + 1)/100);
+  //   }
+  //   glEnd();
+  // }
+
+  glPushMatrix();
+  for(int i = 0; i < height-1; i++) {
+    glBegin(GL_TRIANGLE_STRIP);
+    for(int j = 0; j < height; j++) {
+      unsigned char Red1 = PIC_PIXEL(planeData, j,i,0);
+      unsigned char Green1 = PIC_PIXEL(planeData, j,i,1);
+      unsigned char Blue1 = PIC_PIXEL(planeData, j,i,2);
+
+      unsigned char Red2 = PIC_PIXEL(planeData, j,i+1,0);
+      unsigned char Green2 = PIC_PIXEL(planeData, j,i+1,1);
+      unsigned char Blue2 = PIC_PIXEL(planeData, j,i+1,2);
+
+
+
+      glColor3f((float)Red1/255, (float)Green1/255,(float)Blue1/255);
+      glVertex3f((j)/scale - positioning, positioning - 1/scale, (i)/scale - positioning);
+      glColor3f((float)Red2/255, (float)Green2/255, (float)Blue2/255);
+      glVertex3f((j)/scale - positioning, positioning - 1/scale, (i+1)/scale - positioning);
+    }
+    glEnd();
+  }
+  glPopMatrix();
+  // // for(int i = 0; i < 99; i++) {
+  // //   glBegin(GL_TRIANGLE_STRIP);
+  // //   for(int j = 0; j < 100; j++) {
+  // //     glColor3f(128, 0, 0);
+  // //     glVertex3f(scale*-0.5, scale*(j - 50.0)/100, scale*(i - 50.0)/100);
+  // //     glColor3f(128, 0, 0);
+  // //     glVertex3f(scale*-0.5, scale*(j - 50.0 )/100, scale*(i - 50.0 + 1)/100);
+  // //   }
+  // //   glEnd();
+  // // }
+
+
+  glPushMatrix();
+  glRotated(-90, 1,0,0);
+  for(int i = 0; i < height-1; i++) {
+    glBegin(GL_TRIANGLE_STRIP);
+    for(int j = 0; j < height; j++) {
+      unsigned char Red1 = PIC_PIXEL(sideData, j,i,0);
+      unsigned char Green1 = PIC_PIXEL(sideData, j,i,1);
+      unsigned char Blue1 = PIC_PIXEL(sideData, j,i,2);
+
+      unsigned char Red2 = PIC_PIXEL(sideData, j,i+1,0);
+      unsigned char Green2 = PIC_PIXEL(sideData, j,i+1,1);
+      unsigned char Blue2 = PIC_PIXEL(sideData, j,i+1,2);
+
+
+
+      glColor3f((float)Red1/255, (float)Green1/255,(float)Blue1/255);
+      glVertex3f(-positioning + 1/scale, (j)/scale - positioning, (i)/scale - positioning);
+      glColor3f((float)Red2/255, (float)Green2/255, (float)Blue2/255);
+      glVertex3f(-positioning + 1/scale, (j)/scale - positioning, (i+1)/scale -positioning);
+    }
+    glEnd();
+  }
+  glPopMatrix();
+  // for(int i = 0; i < 99; i++) {
+  //   glBegin(GL_TRIANGLE_STRIP);
+  //   for(int j = 0; j < 100; j++) {
+  //     glColor3f(128, 0, 0);
+  //     glVertex3f(scale*(0.5 - 0.01), scale*(j - 50.0)/100, scale*(i - 50.0)/100);
+  //     glColor3f(128, 0, 0);
+  //     glVertex3f(scale*(0.5 - 0.01), scale*(j - 50.0 )/100, scale*(i - 50.0 + 1)/100);
+  //   }
+  //   glEnd();
+  // }
+
+  glPushMatrix();
+  glRotated(-90, 1,0,0);
+  for(int i = 0; i < height-1; i++) {
+    glBegin(GL_TRIANGLE_STRIP);
+    for(int j = 0; j < height; j++) {
+      unsigned char Red1 = PIC_PIXEL(sideData, j,i,0);
+      unsigned char Green1 = PIC_PIXEL(sideData, j,i,1);
+      unsigned char Blue1 = PIC_PIXEL(sideData, j,i,2);
+
+      unsigned char Red2 = PIC_PIXEL(sideData, j,i+1,0);
+      unsigned char Green2 = PIC_PIXEL(sideData, j,i+1,1);
+      unsigned char Blue2 = PIC_PIXEL(sideData, j,i+1,2);
+
+
+
+      glColor3f((float)Red1/255, (float)Green1/255,(float)Blue1/255);
+      glVertex3f(positioning - 2/scale, (j)/scale - positioning, (i)/scale - positioning);
+      glColor3f((float)Red2/255, (float)Green2/255, (float)Blue2/255);
+      glVertex3f(positioning - 2/scale, (j)/scale - positioning, (i+1)/scale - positioning);
+    }
+    glEnd();
+  }
+  glPopMatrix();
+  //   for(int i = 0; i < 99; i++) {
+  //   glBegin(GL_TRIANGLE_STRIP);
+  //   for(int j = 0; j < 100; j++) {
+  //     glColor3f(0, 0, 139);
+  //     glVertex3f(scale*(j - 50.0)/100, scale*(i - 50.0)/100, scale*(0.5 - 0.01));
+  //     glColor3f(0, 0, 139);
+  //     glVertex3f(scale*(j - 50.0)/100, scale*(i - 50.0 + 1)/100, scale*(0.5 - 0.01));
+  //   }
+  //   glEnd();
+  // }
+
+  glPushMatrix();
+  glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+  for(int i = 0; i < height-1; i++) {
+    glBegin(GL_TRIANGLE_STRIP);
+    for(int j = 0; j < height; j++) {
+      unsigned char Red1 = PIC_PIXEL(sideData, j,i,0);
+      unsigned char Green1 = PIC_PIXEL(sideData, j,i,1);
+      unsigned char Blue1 = PIC_PIXEL(sideData, j,i,2);
+
+      unsigned char Red2 = PIC_PIXEL(sideData, j,i+1,0);
+      unsigned char Green2 = PIC_PIXEL(sideData, j,i+1,1);
+      unsigned char Blue2 = PIC_PIXEL(sideData, j,i+1,2);
+
+
+
+      glColor3f((float)Red1/255, (float)Green1/255,(float)Blue1/255);
+      glVertex3f((j)/scale - positioning, (i)/scale - positioning, positioning - 1/scale);
+      glColor3f((float)Red2/255, (float)Green2/255, (float)Blue2/255);
+      glVertex3f((j)/scale - positioning, (i +1)/scale - positioning, positioning - 1/scale);
+    }
+    glEnd();
+  }
+  glPopMatrix();
 }
 
 point calcNormTangent(const point* nextPoint) {
@@ -356,7 +489,7 @@ void coaster() {
         control3 = g_Splines[0].points[j];
         control4 = g_Splines[0].points[j+1];
   
-        for(double q = 0; q <= 1; q += 0.005) {
+        for(double q = 0; q <= 1; q += 0.05) {
           point currentPoint = splineVertice(&control1, &control2, &control3, &control4, q);
           if(start) {
             start = 0;
@@ -476,7 +609,7 @@ void display(void) {
     storeNorms[index].z
   );
 
-  if(count%5 == 0) {
+  if(count%1 == 0) {
     index++;
     if(index == CoasterLength) {
       index = 0;
@@ -484,14 +617,17 @@ void display(void) {
   }
   
   count++;
+    
     mouseRotate();
     mouseTranslate();
     mouseScale();
 
 
-    // glPushMatrix();
+    glPushMatrix();
+    // glTranslatef(50,50,-100);
+    glRotated(180, 0,0,1);
     drawSideplanes();
-    // glPopMatrix();
+    glPopMatrix();
 
 
     glPushMatrix();
@@ -531,22 +667,22 @@ void reshape(int w, int h)
 void keyboard(unsigned char key, int x, int y) {
   switch (key) {
     case 'w':
-      g_vLandTranslate[2] += 0.1;
+      g_vLandTranslate[2] += 0.5;
       break;
     case 'a':
-      g_vLandTranslate[0] += 0.1;
+      g_vLandTranslate[0] += 0.5;
       break;
     case 's':
-      g_vLandTranslate[2] -= 0.1;
+      g_vLandTranslate[2] -= 0.5;
       break;
     case 'd':
-      g_vLandTranslate[0] -= 0.1;
+      g_vLandTranslate[0] -= 0.5;
       break;
     case 'q':
-      g_vLandTranslate[1] += 0.1;
+      g_vLandTranslate[1] += 0.5;
       break;
     case 'e':
-      g_vLandTranslate[1] -= 0.1;
+      g_vLandTranslate[1] -= 0.5;
       break;
   }
 }
@@ -560,12 +696,24 @@ int main (int argc, char ** argv)
   exit(0);
   }
 
-  // planeData = jpeg_read("./joji_necklace.jpg", NULL);
-  // if (!planeData)
-  // {
-  //   printf ("error reading %s.\n", argv[1]);
-  //   exit(1);
-  // }
+  planeData = jpeg_read("./h.jpg", NULL);
+  if (!planeData)
+  {
+    printf ("error reading %s.\n", argv[1]);
+    exit(1);
+  }
+  sideData = jpeg_read("./wxp.jpeg", NULL);
+  if (!sideData)
+  {
+    printf ("error reading %s.\n", argv[1]);
+    exit(1);
+  }
+  topData = jpeg_read("./sun.jpg", NULL);
+  if (!topData)
+  {
+    printf ("error reading %s.\n", argv[1]);
+    exit(1);
+  }
 
   loadSplines(argv[1]);
 
