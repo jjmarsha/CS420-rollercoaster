@@ -624,13 +624,13 @@ void display(void) {
 
 
     glPushMatrix();
+    glRotated(90, 0, 0, 1);  
     // glTranslatef(50,50,-100);
     drawSideplanes();
     glPopMatrix();
 
 
     glPushMatrix();
-    glRotated(90, 0, 0, 1);
     glCallList(trackList);
     glPopMatrix();
 
