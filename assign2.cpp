@@ -630,6 +630,7 @@ void display(void) {
 
 
     glPushMatrix();
+    glRotated(90, 0, 0, 1);
     glCallList(trackList);
     glPopMatrix();
 
