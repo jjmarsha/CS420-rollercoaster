@@ -447,12 +447,12 @@ point calcNormTangent(const point* nextPoint) {
   return {nextPoint->xP/magnitude, nextPoint->yP/magnitude, nextPoint->zP/magnitude};
 }
 
-point calculateNormal(point currTangent, point prevBinorm) {
-  // std::cout << currTangent.x << std::endl;
-  // std::cout << prevBinorm.x << std::endl;
-  double x = currTangent.y*prevBinorm.z - currTangent.z*prevBinorm.y;
-  double y = currTangent.z*prevBinorm.x - currTangent.x*prevBinorm.z;
-  double z = currTangent.x*prevBinorm.y - currTangent.y*prevBinorm.x;
+point crossProduct(point vector1, point vector2) {
+  // std::cout << vector1.x << std::endl;
+  // std::cout << vector2.x << std::endl;
+  double x = vector1.y*vector2.z - vector1.z*vector2.y;
+  double y = vector1.z*vector2.x - vector1.x*vector2.z;
+  double z = vector1.x*vector2.y - vector1.y*vector2.x;
   double magnitude = pow((pow(x,2) + pow(y, 2) + pow(z, 2)), 0.5);
   // std::cout << "inside calcnorm " << "x: " << x << " y: "<< y << " z: " << z << std::endl;
   return {x/magnitude, y/magnitude, z/magnitude};
@@ -468,8 +468,8 @@ point calculateNormal(point currTangent, point prevBinorm) {
 void coaster() {
   glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
       // point thisTan = calcNormTangent(&coasterPoints[index]);
-      // point thisNorm = calculateNormal(prevB, tangentVectorStart);
-      // point thisB = calculateNormal(tangentVectorStart, prevNorm);
+      // point thisNorm = crossProduct(prevB, tangentVectorStart);
+      // point thisB = crossProduct(tangentVectorStart, prevNorm);
     if(!alreadyGenerated) {
       point thisTan;
       point thisNorm;
@@ -494,14 +494,14 @@ void coaster() {
           if(start) {
             start = 0;
             thisTan = calcNormTangent(&currentPoint);
-            thisNorm = calculateNormal({3,2,1}, thisTan);
-            thisB = calculateNormal(thisTan, thisNorm);
+            thisNorm = crossProduct({3,2,1}, thisTan);
+            thisB = crossProduct(thisTan, thisNorm);
             storeBinormals[CoasterLength] = thisB;
             storeNorms[CoasterLength] = thisNorm;
           } else {
             thisTan = calcNormTangent(&currentPoint);
-            thisNorm = calculateNormal(thisB, thisTan);
-            thisB = calculateNormal(thisTan, thisNorm);
+            thisNorm = crossProduct(thisB, thisTan);
+            thisB = crossProduct(thisTan, thisNorm);
             storeBinormals[CoasterLength] = thisB;
             storeNorms[CoasterLength] = thisNorm;
           }
