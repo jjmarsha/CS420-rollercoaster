@@ -381,12 +381,12 @@ point crossProduct(point vector1, point vector2) {
   return {x/magnitude, y/magnitude, z/magnitude};
 }
 
-  point calcVectorPoints(int vectorIndex, double norm, double bi, double scale, double second) {
-      double x = coasterPoints[vectorIndex].x + scale*(norm*storeNorms[vectorIndex].x + bi*storeBinormals[vectorIndex].x) + scale*second*storeBinormals[vectorIndex].x;
-      double y = coasterPoints[vectorIndex].y + scale*(norm*storeNorms[vectorIndex].y + bi*storeBinormals[vectorIndex].y) +  scale*second*storeBinormals[vectorIndex].y;
-      double z = coasterPoints[vectorIndex].z + scale*(norm*storeNorms[vectorIndex].z + bi*storeBinormals[vectorIndex].z) + scale*second*storeBinormals[vectorIndex].z;
-      return {x, y, z};
-  }
+  // point calcVectorPoints(int vectorIndex, double norm, double bi, double scale, double second) {
+  //     double x = coasterPoints[vectorIndex].x + scale*(norm*storeNorms[vectorIndex].x + bi*storeBinormals[vectorIndex].x) + scale*second*storeBinormals[vectorIndex].x;
+  //     double y = coasterPoints[vectorIndex].y + scale*(norm*storeNorms[vectorIndex].y + bi*storeBinormals[vectorIndex].y) +  scale*second*storeBinormals[vectorIndex].y;
+  //     double z = coasterPoints[vectorIndex].z + scale*(norm*storeNorms[vectorIndex].z + bi*storeBinormals[vectorIndex].z) + scale*second*storeBinormals[vectorIndex].z;
+  //     return {x, y, z};
+  // }
 
 void coaster() {
   glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
