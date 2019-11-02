@@ -37,6 +37,7 @@ struct point {
 
 GLuint trackList;
 GLuint skybox;
+GLfloat LightSource[] = {0,10,0};;
 
 double scaleVar = 0.002;
 
@@ -515,6 +516,10 @@ void display(void) {
 
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
+
+  glMaterialfv(GL_FRONT,GL_DIFFUSE,LightSource);
+  glLightfv(GL_LIGHT0,GL_POSITION, LightSource);
+
   glMatrixMode(GL_MODELVIEW);
   glLoadIdentity();
 
@@ -676,6 +681,9 @@ int main (int argc, char ** argv)
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
   glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 512, 512, 0, GL_RGB, GL_UNSIGNED_BYTE, planeData->pix);
+  
+  glLightfv(GL_LIGHT0,GL_DIFFUSE,LightSource);
+
 
   glutInitDisplayMode(GLUT_DOUBLE | GLUT_DEPTH | GLUT_RGB);
   glutDisplayFunc(display);
