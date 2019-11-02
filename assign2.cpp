@@ -36,6 +36,7 @@ struct point {
 };
 
 GLuint trackList;
+GLuint skybox;
 
 /* spline struct which contains how many control points, and an array of control points */
 struct spline {
@@ -54,6 +55,12 @@ int CameraTraverse = 0;
 
 /* the spline array */
 struct spline *g_Splines;
+
+GLuint SideTex;
+
+GLuint TopTex;
+
+GLuint BottomTex;
 
 /* total number of splines */
 int g_iNumOfSplines;
@@ -246,178 +253,88 @@ void drawSideplanes() {
   int positioning = planeData->nx/(2*scale);
   int height = planeData->nx;
 
+  glEnable(GL_TEXTURE_2D);
+  glBindTexture(GL_TEXTURE_2D, SideTex);
   glPushMatrix();
+  glRotatef(90,0,0,1);
   glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
   for(int i = 0; i < height-1; i++) {
     glBegin(GL_TRIANGLE_STRIP);
     for(int j = 0; j < height; j++) {
-      unsigned char Red1 = PIC_PIXEL(sideData, j,i,0);
-      unsigned char Green1 = PIC_PIXEL(sideData, j,i,1);
-      unsigned char Blue1 = PIC_PIXEL(sideData, j,i,2);
-
-      unsigned char Red2 = PIC_PIXEL(sideData, j,i+1,0);
-      unsigned char Green2 = PIC_PIXEL(sideData, j,i+1,1);
-      unsigned char Blue2 = PIC_PIXEL(sideData, j,i+1,2);
-
-
-
-      glColor3f((float)Red1/255, (float)Green1/255,(float)Blue1/255);
+      glTexCoord2f(i/512.0, j/512.0);
       glVertex3f((j)/scale - positioning, (i)/scale - positioning, -positioning);
-      glColor3f((float)Red2/255, (float)Green2/255, (float)Blue2/255);
+      glTexCoord2f((i+1)/512.0, j/512.0);    
       glVertex3f((j)/scale - positioning, (i +1)/scale - positioning, -positioning);
     }
     glEnd();
   }
   glPopMatrix();
-  // glPopMatrix();
-  // for(int i = 0; i < 99; i++) {
-  //   glBegin(GL_TRIANGLE_STRIP);
-  //   for(int j = 0; j < 100; j++) {
-  //     glColor3f(i*128, 0, 256);
-  //     glVertex3f(scale*(j - 50.0)/100, scale*-0.5, scale*(i - 50.0)/100);
-  //     glColor3f((i+1)*128, 0, 256);
-  //     glVertex3f(scale*(j - 50.0)/100, scale*-0.5, scale*(i - 50.0 + 1)/100);
-  //   }
-  //   glEnd();
-  // }
+  glDisable(GL_TEXTURE_2D);
 
+  glEnable(GL_TEXTURE_2D);
+  glBindTexture(GL_TEXTURE_2D, TopTex);
   glPushMatrix();
+  // glRotatef(90,0,0,1);
   for(int i = 0; i < height-1; i++) {
     glBegin(GL_TRIANGLE_STRIP);
     for(int j = 0; j < height; j++) {
-      unsigned char Red1 = PIC_PIXEL(topData, j,i,0);
-      unsigned char Green1 = PIC_PIXEL(topData, j,i,1);
-      unsigned char Blue1 = PIC_PIXEL(topData, j,i,2);
-
-      unsigned char Red2 = PIC_PIXEL(topData, j,i+1,0);
-      unsigned char Green2 = PIC_PIXEL(topData, j,i+1,1);
-      unsigned char Blue2 = PIC_PIXEL(topData, j,i+1,2);
-
-
-
-      glColor3f((float)Red1/255, (float)Green1/255,(float)Blue1/255);
+      glTexCoord2f(i/512.0, j/512.0);
       glVertex3f((j)/scale - positioning, -positioning, (i)/scale-positioning);
-      glColor3f((float)Red2/255, (float)Green2/255, (float)Blue2/255);
+      glTexCoord2f((i+1)/512.0, j/512.0);
       glVertex3f((j)/scale - positioning, -positioning, (i+1)/scale - positioning);
     }
     glEnd();
   }
   glPopMatrix();
-  // glPopMatrix();
-  // for(int i = 0; i < 99; i++) {
-  //   glBegin(GL_TRIANGLE_STRIP);
-  //   for(int j = 0; j < 100; j++) {
-  //     glColor3f(128, 0, 256);
-  //     glVertex3f(scale*(j - 50.0)/100, scale*(0.5 - 0.01), scale*(i - 50.0)/100);
-  //     glColor3f(128, 0, 256);
-  //     glVertex3f(scale*(j - 50.0)/100, scale*(0.5 - 0.01), scale*(i - 50.0 + 1)/100);
-  //   }
-  //   glEnd();
-  // }
+  glDisable(GL_TEXTURE_2D);
 
+  glEnable(GL_TEXTURE_2D);
+  glBindTexture(GL_TEXTURE_2D, BottomTex);
   glPushMatrix();
   for(int i = 0; i < height-1; i++) {
     glBegin(GL_TRIANGLE_STRIP);
     for(int j = 0; j < height; j++) {
-      unsigned char Red1 = PIC_PIXEL(planeData, j,i,0);
-      unsigned char Green1 = PIC_PIXEL(planeData, j,i,1);
-      unsigned char Blue1 = PIC_PIXEL(planeData, j,i,2);
-
-      unsigned char Red2 = PIC_PIXEL(planeData, j,i+1,0);
-      unsigned char Green2 = PIC_PIXEL(planeData, j,i+1,1);
-      unsigned char Blue2 = PIC_PIXEL(planeData, j,i+1,2);
-
-
-
-      glColor3f((float)Red1/255, (float)Green1/255,(float)Blue1/255);
+      glTexCoord2f(i/512.0, j/512.0);
       glVertex3f((j)/scale - positioning, positioning - 1/scale, (i)/scale - positioning);
-      glColor3f((float)Red2/255, (float)Green2/255, (float)Blue2/255);
+      glTexCoord2f((i+1)/512.0, j/512.0);
       glVertex3f((j)/scale - positioning, positioning - 1/scale, (i+1)/scale - positioning);
     }
     glEnd();
   }
   glPopMatrix();
-  // // for(int i = 0; i < 99; i++) {
-  // //   glBegin(GL_TRIANGLE_STRIP);
-  // //   for(int j = 0; j < 100; j++) {
-  // //     glColor3f(128, 0, 0);
-  // //     glVertex3f(scale*-0.5, scale*(j - 50.0)/100, scale*(i - 50.0)/100);
-  // //     glColor3f(128, 0, 0);
-  // //     glVertex3f(scale*-0.5, scale*(j - 50.0 )/100, scale*(i - 50.0 + 1)/100);
-  // //   }
-  // //   glEnd();
-  // // }
+  glDisable(GL_TEXTURE_2D);
 
-
+  glEnable(GL_TEXTURE_2D);
+  glBindTexture(GL_TEXTURE_2D, SideTex);
   glPushMatrix();
-  glRotated(-90, 1,0,0);
+  // glRotated(0, 1,0,0);
   for(int i = 0; i < height-1; i++) {
     glBegin(GL_TRIANGLE_STRIP);
     for(int j = 0; j < height; j++) {
-      unsigned char Red1 = PIC_PIXEL(sideData, j,i,0);
-      unsigned char Green1 = PIC_PIXEL(sideData, j,i,1);
-      unsigned char Blue1 = PIC_PIXEL(sideData, j,i,2);
-
-      unsigned char Red2 = PIC_PIXEL(sideData, j,i+1,0);
-      unsigned char Green2 = PIC_PIXEL(sideData, j,i+1,1);
-      unsigned char Blue2 = PIC_PIXEL(sideData, j,i+1,2);
-
-
-
-      glColor3f((float)Red1/255, (float)Green1/255,(float)Blue1/255);
+      glTexCoord2f(i/512.0, j/512.0);
       glVertex3f(-positioning + 1/scale, (j)/scale - positioning, (i)/scale - positioning);
-      glColor3f((float)Red2/255, (float)Green2/255, (float)Blue2/255);
+      glTexCoord2f((i+1)/512.0, j/512.0);
       glVertex3f(-positioning + 1/scale, (j)/scale - positioning, (i+1)/scale -positioning);
     }
     glEnd();
   }
   glPopMatrix();
-  // for(int i = 0; i < 99; i++) {
-  //   glBegin(GL_TRIANGLE_STRIP);
-  //   for(int j = 0; j < 100; j++) {
-  //     glColor3f(128, 0, 0);
-  //     glVertex3f(scale*(0.5 - 0.01), scale*(j - 50.0)/100, scale*(i - 50.0)/100);
-  //     glColor3f(128, 0, 0);
-  //     glVertex3f(scale*(0.5 - 0.01), scale*(j - 50.0 )/100, scale*(i - 50.0 + 1)/100);
-  //   }
-  //   glEnd();
-  // }
 
   glPushMatrix();
-  glRotated(-90, 1,0,0);
   for(int i = 0; i < height-1; i++) {
     glBegin(GL_TRIANGLE_STRIP);
     for(int j = 0; j < height; j++) {
-      unsigned char Red1 = PIC_PIXEL(sideData, j,i,0);
-      unsigned char Green1 = PIC_PIXEL(sideData, j,i,1);
-      unsigned char Blue1 = PIC_PIXEL(sideData, j,i,2);
-
-      unsigned char Red2 = PIC_PIXEL(sideData, j,i+1,0);
-      unsigned char Green2 = PIC_PIXEL(sideData, j,i+1,1);
-      unsigned char Blue2 = PIC_PIXEL(sideData, j,i+1,2);
-
-
-
-      glColor3f((float)Red1/255, (float)Green1/255,(float)Blue1/255);
+      glTexCoord2f(i/512.0, j/512.0);
       glVertex3f(positioning - 2/scale, (j)/scale - positioning, (i)/scale - positioning);
-      glColor3f((float)Red2/255, (float)Green2/255, (float)Blue2/255);
+      glTexCoord2f((i+1)/512.0, j/512.0);
       glVertex3f(positioning - 2/scale, (j)/scale - positioning, (i+1)/scale - positioning);
     }
     glEnd();
   }
   glPopMatrix();
-  //   for(int i = 0; i < 99; i++) {
-  //   glBegin(GL_TRIANGLE_STRIP);
-  //   for(int j = 0; j < 100; j++) {
-  //     glColor3f(0, 0, 139);
-  //     glVertex3f(scale*(j - 50.0)/100, scale*(i - 50.0)/100, scale*(0.5 - 0.01));
-  //     glColor3f(0, 0, 139);
-  //     glVertex3f(scale*(j - 50.0)/100, scale*(i - 50.0 + 1)/100, scale*(0.5 - 0.01));
-  //   }
-  //   glEnd();
-  // }
 
   glPushMatrix();
+  glRotated(90, 0,0,1);
   glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
   for(int i = 0; i < height-1; i++) {
     glBegin(GL_TRIANGLE_STRIP);
@@ -432,14 +349,16 @@ void drawSideplanes() {
 
 
 
-      glColor3f((float)Red1/255, (float)Green1/255,(float)Blue1/255);
+      glTexCoord2f(i/512.0, j/512.0);
       glVertex3f((j)/scale - positioning, (i)/scale - positioning, positioning - 1/scale);
-      glColor3f((float)Red2/255, (float)Green2/255, (float)Blue2/255);
+      glTexCoord2f((i+1)/512.0, j/512.0);
       glVertex3f((j)/scale - positioning, (i +1)/scale - positioning, positioning - 1/scale);
     }
     glEnd();
   }
   glPopMatrix();
+  glDisable(GL_TEXTURE_2D);
+
 }
 
 point calcNormTangent(const point* nextPoint) {
@@ -591,23 +510,24 @@ int index = 0;
 void display(void) {
 
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    glMatrixMode(GL_MODELVIEW);
+  glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
+  glMatrixMode(GL_MODELVIEW);
   glLoadIdentity();
 
   // gluLookAt(coasterPoints[index].x + 0.023*storeNorms[index].x, coasterPoints[index].y + 0.023*storeNorms[index].y, coasterPoints[index].z + 0.023*storeNorms[index].z, coasterPoints[index+1].x, coasterPoints[index+1].y, coasterPoints[index+1].z, storeNorms[index].x, storeNorms[index].y, storeNorms[index].z);
   double scale = 0.003;
 
-  gluLookAt(
-    coasterPoints[index].x + scale*storeNorms[index].x + 0.5*0.001*20*storeBinormals[index].x,
-    coasterPoints[index].y + scale*storeNorms[index].y + 0.5*0.001*20*storeBinormals[index].y,
-    coasterPoints[index].z + scale*storeNorms[index].z + 0.5*0.001*20*storeBinormals[index].z,
-    coasterPoints[index+1].x + scale*storeNorms[index+1].x + 0.5*0.001*20*storeBinormals[index+1].x, 
-    coasterPoints[index+1].y + scale*storeNorms[index+1].y + 0.5*0.001*20*storeBinormals[index+1].y, 
-    coasterPoints[index+1].z + scale*storeNorms[index+1].z + 0.5*0.001*20*storeBinormals[index+1].z, 
-    storeNorms[index].x, 
-    storeNorms[index].y, 
-    storeNorms[index].z
-  );
+    // gluLookAt(
+    //   coasterPoints[index].x + scale*storeNorms[index].x + 0.5*0.001*20*storeBinormals[index].x,
+    //   coasterPoints[index].y + scale*storeNorms[index].y + 0.5*0.001*20*storeBinormals[index].y,
+    //   coasterPoints[index].z + scale*storeNorms[index].z + 0.5*0.001*20*storeBinormals[index].z,
+    //   coasterPoints[index+1].x + scale*storeNorms[index+1].x + 0.5*0.001*20*storeBinormals[index+1].x, 
+    //   coasterPoints[index+1].y + scale*storeNorms[index+1].y + 0.5*0.001*20*storeBinormals[index+1].y, 
+    //   coasterPoints[index+1].z + scale*storeNorms[index+1].z + 0.5*0.001*20*storeBinormals[index+1].z, 
+    //   storeNorms[index].x, 
+    //   storeNorms[index].y, 
+    //   storeNorms[index].z
+    // );
 
   if(count%1 == 0) {
     index++;
@@ -625,8 +545,7 @@ void display(void) {
 
     glPushMatrix();
     glRotated(90, 0, 0, 1);  
-    // glTranslatef(50,50,-100);
-    drawSideplanes();
+    glCallList(skybox);
     glPopMatrix();
 
 
@@ -651,6 +570,12 @@ void myinit()
   glNewList(trackList, GL_COMPILE);
     coaster();
   glEndList();
+
+  skybox = glGenLists(1);
+  glNewList(trackList, GL_COMPILE);
+    drawSideplanes();
+  glEndList();
+
 }
 
 void reshape(int w, int h)
@@ -722,6 +647,32 @@ int main (int argc, char ** argv)
   glutInitWindowSize(640, 480);
   glutInitWindowPosition(0, 0);
   glutCreateWindow("SUP BOY!");
+  
+  //textures
+  glGenTextures(1, &TopTex);
+  glBindTexture(GL_TEXTURE_2D, TopTex);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+  glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 512, 512, 0, GL_RGB, GL_UNSIGNED_BYTE, topData->pix);
+
+  glGenTextures(1, &SideTex);
+  glBindTexture(GL_TEXTURE_2D, SideTex);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+  glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 512, 512, 0, GL_RGB, GL_UNSIGNED_BYTE, sideData->pix);
+
+  glGenTextures(1, &BottomTex);
+  glBindTexture(GL_TEXTURE_2D, BottomTex);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+  glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 512, 512, 0, GL_RGB, GL_UNSIGNED_BYTE, planeData->pix);
+
   glutInitDisplayMode(GLUT_DOUBLE | GLUT_DEPTH | GLUT_RGB);
   glutDisplayFunc(display);
   glutReshapeFunc(reshape);
