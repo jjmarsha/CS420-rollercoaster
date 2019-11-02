@@ -517,12 +517,12 @@ void display(void) {
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
   glLoadIdentity();
-  glMatrixMode(GL_MODELVIEW);
   GLfloat position[] = {16.0, 0.0, 0.0, 1.0};
 
   glMaterialfv(GL_FRONT,GL_DIFFUSE,position);
   glLightfv(GL_LIGHT0,GL_POSITION, position);
   
+  glMatrixMode(GL_MODELVIEW);
 
 
   // gluLookAt(coasterPoints[index].x + 0.023*storeNorms[index].x, coasterPoints[index].y + 0.023*storeNorms[index].y, coasterPoints[index].z + 0.023*storeNorms[index].z, coasterPoints[index+1].x, coasterPoints[index+1].y, coasterPoints[index+1].z, storeNorms[index].x, storeNorms[index].y, storeNorms[index].z);
@@ -587,6 +587,8 @@ void myinit()
   glNewList(skybox, GL_COMPILE);
     drawSideplanes();
   glEndList();
+
+  glEnable(GL_LIGHT0);
 
 }
 
