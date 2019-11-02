@@ -543,10 +543,10 @@ void display(void) {
     mouseScale();
 
 
-    glPushMatrix();
-    glRotated(90, 0, 0, 1);  
-    glCallList(skybox);
-    glPopMatrix();
+    // glPushMatrix();
+    // glRotated(90, 0, 0, 1);  
+    // glCallList(skybox);
+    // glPopMatrix();
 
 
     glPushMatrix();
@@ -572,7 +572,7 @@ void myinit()
   glEndList();
 
   skybox = glGenLists(1);
-  glNewList(trackList, GL_COMPILE);
+  glNewList(skybox, GL_COMPILE);
     drawSideplanes();
   glEndList();
 
