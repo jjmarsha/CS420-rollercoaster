@@ -520,7 +520,7 @@ void display(void) {
   glLoadIdentity();
   GLfloat position[] = {1.0, 0.0, 0.0, 1.0};
 
-  glMaterialfv(GL_FRONT,GL_DIFFUSE,LightSource);
+  glMaterialfv(GL_FRONT,GL_DIFFUSE,position);
   glLightfv(GL_LIGHT0,GL_POSITION, position);
   
 
