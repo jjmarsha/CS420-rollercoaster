@@ -38,6 +38,9 @@ struct point {
 GLuint trackList;
 GLuint skybox;
 
+double scaleVar = 0.002;
+
+
 /* spline struct which contains how many control points, and an array of control points */
 struct spline {
    int numControlPoints;
@@ -431,15 +434,16 @@ void coaster() {
     }
     glColor3f( 0.5, 0.5, 0.5);
 
+
     for(int i = 0; i < CoasterLength-1; i++) {
-        point v0 = calcVectorPoints(i, -1, 1, 0.002, 0);
-        point v1 = calcVectorPoints(i, 1, 1, 0.002, 0);
-        point v2 = calcVectorPoints(i, 1, -1, 0.002, 0);
-        point v3 = calcVectorPoints(i, -1, -1, 0.002, 0);
-        point v4 = calcVectorPoints(i+1, -1, 1, 0.002, 0);
-        point v5 = calcVectorPoints(i+1, 1, 1, 0.002, 0);
-        point v6 = calcVectorPoints(i+1, 1, -1, 0.002, 0);
-        point v7 = calcVectorPoints(i+1, -1, -1, 0.002, 0);
+        point v0 = calcVectorPoints(i, -1, 1, scaleVar, 0);
+        point v1 = calcVectorPoints(i, 1, 1, scaleVar, 0);
+        point v2 = calcVectorPoints(i, 1, -1, scaleVar, 0);
+        point v3 = calcVectorPoints(i, -1, -1, scaleVar, 0);
+        point v4 = calcVectorPoints(i+1, -1, 1, scaleVar, 0);
+        point v5 = calcVectorPoints(i+1, 1, 1, scaleVar, 0);
+        point v6 = calcVectorPoints(i+1, 1, -1, scaleVar, 0);
+        point v7 = calcVectorPoints(i+1, -1, -1, scaleVar, 0);
 
         glBegin(GL_QUADS);
           glVertex3f(v0.x, v0.y, v0.z);
@@ -468,14 +472,14 @@ void coaster() {
     }
 
     for(int i = 0; i < CoasterLength-1; i++) {
-        point v0 = calcVectorPoints(i, -1, 1, 0.002, 20);
-        point v1 = calcVectorPoints(i, 1, 1, 0.002, 20);
-        point v2 = calcVectorPoints(i, 1, -1, 0.002, 20);
-        point v3 = calcVectorPoints(i, -1, -1, 0.002, 20);
-        point v4 = calcVectorPoints(i+1, -1, 1, 0.002, 20);
-        point v5 = calcVectorPoints(i+1, 1, 1, 0.002, 20);
-        point v6 = calcVectorPoints(i+1, 1, -1, 0.002, 20);
-        point v7 = calcVectorPoints(i+1, -1, -1, 0.002, 20);
+        point v0 = calcVectorPoints(i, -1, 1, scaleVar, 20);
+        point v1 = calcVectorPoints(i, 1, 1, scaleVar, 20);
+        point v2 = calcVectorPoints(i, 1, -1, scaleVar, 20);
+        point v3 = calcVectorPoints(i, -1, -1, scaleVar, 20);
+        point v4 = calcVectorPoints(i+1, -1, 1, scaleVar, 20);
+        point v5 = calcVectorPoints(i+1, 1, 1, scaleVar, 20);
+        point v6 = calcVectorPoints(i+1, 1, -1, scaleVar, 20);
+        point v7 = calcVectorPoints(i+1, -1, -1, scaleVar, 20);
 
         glBegin(GL_QUADS);
           glVertex3f(v0.x, v0.y, v0.z);
@@ -518,12 +522,12 @@ void display(void) {
   double scale = 0.003;
 
     gluLookAt(
-      coasterPoints[index].x + scale*storeNorms[index].x + 0.5*0.001*20*storeBinormals[index].x,
-      coasterPoints[index].y + scale*storeNorms[index].y + 0.5*0.001*20*storeBinormals[index].y,
-      coasterPoints[index].z + scale*storeNorms[index].z + 0.5*0.001*20*storeBinormals[index].z,
-      coasterPoints[index+1].x + scale*storeNorms[index+1].x + 0.5*0.001*20*storeBinormals[index+1].x, 
-      coasterPoints[index+1].y + scale*storeNorms[index+1].y + 0.5*0.001*20*storeBinormals[index+1].y, 
-      coasterPoints[index+1].z + scale*storeNorms[index+1].z + 0.5*0.001*20*storeBinormals[index+1].z, 
+      coasterPoints[index].x + scale*storeNorms[index].x + 0.5*scaleVar*20*storeBinormals[index].x,
+      coasterPoints[index].y + scale*storeNorms[index].y + 0.5*scaleVar*20*storeBinormals[index].y,
+      coasterPoints[index].z + scale*storeNorms[index].z + 0.5*scaleVar*20*storeBinormals[index].z,
+      coasterPoints[index+1].x + scale*storeNorms[index+1].x + 0.5*scaleVar*20*storeBinormals[index+1].x, 
+      coasterPoints[index+1].y + scale*storeNorms[index+1].y + 0.5*scaleVar*20*storeBinormals[index+1].y, 
+      coasterPoints[index+1].z + scale*storeNorms[index+1].z + 0.5*scaleVar*20*storeBinormals[index+1].z, 
       storeNorms[index].x, 
       storeNorms[index].y, 
       storeNorms[index].z
