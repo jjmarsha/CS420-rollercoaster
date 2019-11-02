@@ -408,7 +408,7 @@ void coaster() {
         control3 = g_Splines[0].points[j];
         control4 = g_Splines[0].points[j+1];
   
-        for(double q = 0; q <= 1; q += 0.05) {
+        for(double q = 0; q <= 1; q += 0.001) {
           point currentPoint = splineVertice(&control1, &control2, &control3, &control4, q);
           if(start) {
             start = 0;
