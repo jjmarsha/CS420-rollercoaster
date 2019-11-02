@@ -48,29 +48,28 @@ struct spline {
 };
 
 //stores the points of the coaster for the camera to traverse
+//Meant to store a the points (I was stupid and iniatilize the size before hand because I thought 
+// I was coding in C and C++) Could have used vectors
 point storeNorms[100000];
 point storeBinormals[100000];
 point coasterPoints[100000];
 int CoasterLength = 0;
-char alreadyGenerated = 0;
 
-int CameraTraverse = 0;
+//This is a boolean to determine first render of splines. Again I thought it was C and used chars
+char alreadyGenerated = 0; 
+
 
 /* the spline array */
 struct spline *g_Splines;
 
+//The textures
 GLuint SideTex;
-
 GLuint TopTex;
-
 GLuint BottomTex;
 
 /* total number of splines */
 int g_iNumOfSplines;
 
-Pic * planeData;
-Pic * sideData;
-Pic * topData;
 
 void mouseTranslate() {
       glTranslatef(g_vLandTranslate[0], g_vLandTranslate[1], g_vLandTranslate[2]);
@@ -237,20 +236,18 @@ int loadSplines(char *argv) {
   return 0;
 }
 
-/* vertices of cube about the origin */
-
-point splineVertice(point* c1, point* c2, point* c3, point* c4, double u) {
+//Here we calculate the Cadmull equation and determine the points as well as it's tangent
+point cadmullRom(point* c1, point* c2, point* c3, point* c4, double u) {
   double x = u*u*u*(-S*c1->x + (2-S)*c2->x + (S-2)*c3->x + S*c4->x) + u*u*(2*S*c1->x + (S-3)*c2->x + (3-2*S)*c3->x + -S*c4->x) + u*(-S*c1->x + S*c3->x) + (c2->x);
   double xP = 3*u*u*(-S*c1->x + (2-S)*c2->x + (S-2)*c3->x + S*c4->x) + 2*u*(2*S*c1->x + (S-3)*c2->x + (3-2*S)*c3->x + -S*c4->x) + (-S*c1->x + S*c3->x);
   double y = u*u*u*(-S*c1->y + (2-S)*c2->y + (S-2)*c3->y + S*c4->y) + u*u*(2*S*c1->y + (S-3)*c2->y + (3-2*S)*c3->y + -S*c4->y) + u*(-S*c1->y + S*c3->y) + (c2->y); 
   double yP = 3*u*u*(-S*c1->y + (2-S)*c2->y + (S-2)*c3->y + S*c4->y) + 2*u*(2*S*c1->y + (S-3)*c2->y + (3-2*S)*c3->y + -S*c4->y) + (-S*c1->y + S*c3->y);
   double z = u*u*u*(-S*c1->z + (2-S)*c2->z + (S-2)*c3->z + S*c4->z) + u*u*(2*S*c1->z + (S-3)*c2->z + (3-2*S)*c3->z + -S*c4->z) + u*(-S*c1->z + S*c3->z) + (c2->z);
   double zP = 3*u*u*(-S*c1->z + (2-S)*c2->z + (S-2)*c3->z + S*c4->z) + 2*u*(2*S*c1->z + (S-3)*c2->z + (3-2*S)*c3->z + -S*c4->z) + (-S*c1->z + S*c3->z);
-
   return {x, y, z, xP, yP, zP};
 }
 
-
+//This function we position and set our textures on the faces of the skybox
 void drawSideplanes() {
   double scale = 4;
   int positioning = planeData->nx/(2*scale);
@@ -364,23 +361,23 @@ void drawSideplanes() {
 
 }
 
-point calcNormTangent(const point* nextPoint) {
-  double magnitude = pow((pow(nextPoint->xP, 2) + pow(nextPoint->yP, 2) + pow(nextPoint->zP, 2)), 0.5);
-  return {nextPoint->xP/magnitude, nextPoint->yP/magnitude, nextPoint->zP/magnitude};
+//Calculate norm of tangent
+point normalizeTangent(const point* thisPoint) {
+  double magnitude = pow((pow(thisPoint->xP, 2) + pow(thisPoint->yP, 2) + pow(thisPoint->zP, 2)), 0.5);
+  return {thisPoint->xP/magnitude, thisPoint->yP/magnitude, thisPoint->zP/magnitude};
 }
 
+//cross product function
 point crossProduct(point vector1, point vector2) {
-  // std::cout << vector1.x << std::endl;
-  // std::cout << vector2.x << std::endl;
   double x = vector1.y*vector2.z - vector1.z*vector2.y;
   double y = vector1.z*vector2.x - vector1.x*vector2.z;
   double z = vector1.x*vector2.y - vector1.y*vector2.x;
   double magnitude = pow((pow(x,2) + pow(y, 2) + pow(z, 2)), 0.5);
-  // std::cout << "inside calcnorm " << "x: " << x << " y: "<< y << " z: " << z << std::endl;
   return {x/magnitude, y/magnitude, z/magnitude};
 }
 
-  point calcVectorPoints(int vectorIndex, double norm, double bi, double scale, double second) {
+//Calculate the vector points to draw the cross-section
+point calcVectorPoints(int vectorIndex, double norm, double bi, double scale, double second) {
       double x = coasterPoints[vectorIndex].x + scale*(norm*storeNorms[vectorIndex].x + bi*storeBinormals[vectorIndex].x) + scale*second*storeBinormals[vectorIndex].x;
       double y = coasterPoints[vectorIndex].y + scale*(norm*storeNorms[vectorIndex].y + bi*storeBinormals[vectorIndex].y) +  scale*second*storeBinormals[vectorIndex].y;
       double z = coasterPoints[vectorIndex].z + scale*(norm*storeNorms[vectorIndex].z + bi*storeBinormals[vectorIndex].z) + scale*second*storeBinormals[vectorIndex].z;
@@ -389,9 +386,9 @@ point crossProduct(point vector1, point vector2) {
 
 void coaster() {
   glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-      // point thisTan = calcNormTangent(&coasterPoints[index]);
-      // point thisNorm = crossProduct(prevB, tangentVectorStart);
-      // point thisB = crossProduct(tangentVectorStart, prevNorm);
+
+    //This logic is meant to calculate and store the positions of the splines, norms, and binormals
+    //Will only occur and generation
     if(!alreadyGenerated) {
       point thisTan;
       point thisNorm;
@@ -412,16 +409,16 @@ void coaster() {
         control4 = g_Splines[0].points[j+1];
   
         for(double q = 0; q <= 1; q += 0.001) {
-          point currentPoint = splineVertice(&control1, &control2, &control3, &control4, q);
+          point currentPoint = cadmullRom(&control1, &control2, &control3, &control4, q);
           if(start) {
             start = 0;
-            thisTan = calcNormTangent(&currentPoint);
+            thisTan = normalizeTangent(&currentPoint);
             thisNorm = crossProduct({0,2,0}, thisTan);
             thisB = crossProduct(thisTan, thisNorm);
             storeBinormals[CoasterLength] = thisB;
             storeNorms[CoasterLength] = thisNorm;
           } else {
-            thisTan = calcNormTangent(&currentPoint);
+            thisTan = normalizeTangent(&currentPoint);
             thisNorm = crossProduct(thisB, thisTan);
             thisB = crossProduct(thisTan, thisNorm);
             storeBinormals[CoasterLength] = thisB;
@@ -434,7 +431,7 @@ void coaster() {
     }
     glColor3f( 0.5, 0.5, 0.5);
 
-
+    //here we render the first rail
     for(int i = 0; i < CoasterLength-1; i++) {
         point v0 = calcVectorPoints(i, -1, 1, scaleVar, 0);
         point v1 = calcVectorPoints(i, 1, 1, scaleVar, 0);
@@ -471,6 +468,7 @@ void coaster() {
         glEnd();
     }
 
+    //Here we render the second railing
     for(int i = 0; i < CoasterLength-1; i++) {
         point v0 = calcVectorPoints(i, -1, 1, scaleVar, 20);
         point v1 = calcVectorPoints(i, 1, 1, scaleVar, 20);
@@ -518,9 +516,9 @@ void display(void) {
   glLoadIdentity();
 
 
-
-  // gluLookAt(coasterPoints[index].x + 0.023*storeNorms[index].x, coasterPoints[index].y + 0.023*storeNorms[index].y, coasterPoints[index].z + 0.023*storeNorms[index].z, coasterPoints[index+1].x, coasterPoints[index+1].y, coasterPoints[index+1].z, storeNorms[index].x, storeNorms[index].y, storeNorms[index].z);
+  //a scale variable to determine how high we want our camera above the track
   double scale = 0.003;
+  //scaleVar is the scaling variable for the Binormals that determine the distance from one bar to another
 
     gluLookAt(
       coasterPoints[index].x + scale*storeNorms[index].x + 0.5*scaleVar*20*storeBinormals[index].x,
@@ -533,27 +531,29 @@ void display(void) {
       storeNorms[index].y, 
       storeNorms[index].z
     );
-
-
-  if(count%1 == 0) {
-    index++;
-    if(index == CoasterLength) {
-      index = 0;
+    //Camera movement is down every count%somevar, can change. Increase the modulus number to slow down simulation
+    if(count%1 == 0) {
+      index++;
+      //If it reaches the end of the coaster, we just restart
+      if(index == CoasterLength) {
+        index = 0;
+      }
     }
-  }
+    count++;
   
-  count++;
+  
     
     mouseRotate();
     mouseTranslate();
     mouseScale();
 
-
+    //renders local space for skybox
     glPushMatrix();
     glRotated(90, 1, 0, 0);  
     glCallList(skybox);
     glPopMatrix();
 
+    //renders the roller coaster
     glEnable(GL_LIGHTING);
     glPushMatrix();
     glCallList(trackList);
@@ -583,6 +583,8 @@ void myinit()
     drawSideplanes();
   glEndList();
 
+
+  //My attempts to add lighting that failed
   GLfloat diffuse[] = {0.8, 0.8, 0.8, 1.0};
   GLfloat position[] = {0,0,1,1};
   glMatrixMode(GL_MODELVIEW);
@@ -606,6 +608,7 @@ void reshape(int w, int h)
     glMatrixMode(GL_MODELVIEW);
 }
 
+//Enabled keyboard movement
 void keyboard(unsigned char key, int x, int y) {
   switch (key) {
     case 'w':
@@ -631,12 +634,16 @@ void keyboard(unsigned char key, int x, int y) {
 
 
 int main (int argc, char ** argv)
+
 {
   if (argc<2)
   {  
   printf ("usage: %s <trackfile> <texturemap>\n", argv[0]);
   exit(0);
   }
+  Pic * planeData;
+  Pic * sideData;
+  Pic * topData;
 
   planeData = jpeg_read("./h.jpg", NULL);
   if (!planeData)
@@ -665,7 +672,7 @@ int main (int argc, char ** argv)
   glutInitWindowPosition(0, 0);
   glutCreateWindow("SUP BOY!");
   
-  //textures
+  //textures for the top
   glGenTextures(1, &TopTex);
   glBindTexture(GL_TEXTURE_2D, TopTex);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
@@ -674,6 +681,7 @@ int main (int argc, char ** argv)
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
   glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 512, 512, 0, GL_RGB, GL_UNSIGNED_BYTE, topData->pix);
 
+  //textures for the 4 side faces
   glGenTextures(1, &SideTex);
   glBindTexture(GL_TEXTURE_2D, SideTex);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
@@ -682,6 +690,7 @@ int main (int argc, char ** argv)
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
   glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 512, 512, 0, GL_RGB, GL_UNSIGNED_BYTE, sideData->pix);
 
+  //textures for the bottom grass
   glGenTextures(1, &BottomTex);
   glBindTexture(GL_TEXTURE_2D, BottomTex);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
