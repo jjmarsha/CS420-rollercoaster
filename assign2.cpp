@@ -572,7 +572,7 @@ void myinit()
   glEnable(GL_DEPTH_TEST); 
   // interpolate colors during rasterization
   glShadeModel(GL_SMOOTH);   
-  // glPolygonOffset(0.75, 20);
+  glPolygonOffset(0.75, 20);
 
   trackList = glGenLists(1);
   glNewList(trackList, GL_COMPILE);
