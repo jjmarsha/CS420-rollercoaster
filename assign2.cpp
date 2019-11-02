@@ -433,7 +433,7 @@ void coaster() {
       }
       alreadyGenerated = 1;
     }
-    glColor3f( 0.5, 0.5, 0.5);
+    glColor3f( 0.0, 0.0, 0.0);
 
 
     for(int i = 0; i < CoasterLength-1; i++) {
