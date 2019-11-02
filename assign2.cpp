@@ -37,7 +37,7 @@ struct point {
 
 GLuint trackList;
 GLuint skybox;
-GLfloat LightSource[] = {0,2,0,0};
+GLfloat LightSource[] = {0.2, 0.2, 0.2, 1.0};
 
 double scaleVar = 0.002;
 
@@ -518,9 +518,10 @@ void display(void) {
   glMatrixMode(GL_MODELVIEW);
   glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
   glLoadIdentity();
-  GLfloat position[] = {1.0, 0.0, 0.0, 1.0};
+  GLfloat diffuse[] = {0.8, 0.8, 0.8, 1.0};
+  GLfloat position[] = {0,1,0,1};
 
-  glMaterialfv(GL_FRONT,GL_DIFFUSE,LightSource);
+  glMaterialfv(GL_FRONT,GL_DIFFUSE,diffuse);
   glLightfv(GL_LIGHT0,GL_POSITION, LightSource);
 
 
