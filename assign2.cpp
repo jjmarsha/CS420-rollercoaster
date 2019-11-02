@@ -529,7 +529,7 @@ void display(void) {
       storeNorms[index].z
     );
 
-  if(count%1 == 0) {
+  if(count%5 == 0) {
     index++;
     if(index == CoasterLength) {
       index = 0;
@@ -543,10 +543,10 @@ void display(void) {
     mouseScale();
 
 
-    // glPushMatrix();
-    // glRotated(90, 0, 0, 1);  
-    // glCallList(skybox);
-    // glPopMatrix();
+    glPushMatrix();
+    glRotated(90, 0, 0, 1);  
+    glCallList(skybox);
+    glPopMatrix();
 
 
     glPushMatrix();
