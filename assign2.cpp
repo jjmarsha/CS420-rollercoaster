@@ -529,7 +529,7 @@ void display(void) {
       storeNorms[index].z
     );
 
-  if(count%5 == 0) {
+  if(count%3 == 0) {
     index++;
     if(index == CoasterLength) {
       index = 0;
@@ -544,7 +544,7 @@ void display(void) {
 
 
     glPushMatrix();
-    glRotated(180, 0, 0, 1);  
+    glRotated(180, 1, 0, 0);  
     glCallList(skybox);
     glPopMatrix();
 
