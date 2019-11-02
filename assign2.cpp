@@ -557,10 +557,11 @@ void display(void) {
     // glCallList(skybox);
     // glPopMatrix();
 
-
+    glEnable(GL_LIGHTING);
     glPushMatrix();
     glCallList(trackList);
     glPopMatrix();
+    glDisable(GL_LIGHTING);
 
   glutSwapBuffers();
 }
