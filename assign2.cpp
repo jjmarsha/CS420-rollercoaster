@@ -37,7 +37,7 @@ struct point {
 
 GLuint trackList;
 GLuint skybox;
-GLfloat LightSource[] = {0,10,0};;
+GLfloat LightSource[] = {0,60,0};
 
 double scaleVar = 0.002;
 
@@ -552,10 +552,10 @@ void display(void) {
     mouseScale();
 
 
-    glPushMatrix();
-    glRotated(90, 1, 0, 0);  
-    glCallList(skybox);
-    glPopMatrix();
+    // glPushMatrix();
+    // glRotated(90, 1, 0, 0);  
+    // glCallList(skybox);
+    // glPopMatrix();
 
 
     glPushMatrix();
