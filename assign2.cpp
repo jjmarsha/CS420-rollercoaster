@@ -529,7 +529,7 @@ void display(void) {
       storeNorms[index].z
     );
 
-  if(count%3 == 0) {
+  if(count%1 == 0) {
     index++;
     if(index == CoasterLength) {
       index = 0;
