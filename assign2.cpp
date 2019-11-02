@@ -517,7 +517,7 @@ void display(void) {
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
   glLoadIdentity();
-  GLfloat position[] = {12.0, 20.0, 0.0, 1.0};
+  GLfloat position[] = {1.0, 0.0, 0.0, 1.0};
 
   // glMaterialfv(GL_FRONT,GL_DIFFUSE,LightSource);
   glLightfv(GL_LIGHT0,GL_POSITION, position);
