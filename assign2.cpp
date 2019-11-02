@@ -534,7 +534,6 @@ void display(void) {
       storeNorms[index].z
     );
 
-    std::cout << coasterPoints[index].x << " " << coasterPoints[index].y << " " << coasterPoints[index].z << std::endl;
 
   if(count%1 == 0) {
     index++;
