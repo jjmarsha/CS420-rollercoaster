@@ -433,7 +433,7 @@ void coaster() {
       }
       alreadyGenerated = 1;
     }
-    glColor3f( 0.0, 0.0, 0.0);
+    glColor3f( 0.5, 0.5, 0.5);
 
 
     for(int i = 0; i < CoasterLength-1; i++) {
@@ -517,30 +517,30 @@ void display(void) {
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
   glLoadIdentity();
-  // GLfloat diffuse[] = {0.8, 0.8, 0.8, 1.0};
-  // GLfloat position[] = {0,1,0,1};
+  GLfloat diffuse[] = {0.8, 0.8, 0.8, 1.0};
+  GLfloat position[] = {0,1,0,1};
 
 
   glMatrixMode(GL_MODELVIEW);
 
-  // glMaterialfv(GL_FRONT,GL_DIFFUSE,diffuse);
-  // glLightfv(GL_LIGHT0,GL_POSITION, LightSource);
+  glMaterialfv(GL_FRONT,GL_DIFFUSE,diffuse);
+  glLightfv(GL_LIGHT0,GL_POSITION, LightSource);
 
 
   // gluLookAt(coasterPoints[index].x + 0.023*storeNorms[index].x, coasterPoints[index].y + 0.023*storeNorms[index].y, coasterPoints[index].z + 0.023*storeNorms[index].z, coasterPoints[index+1].x, coasterPoints[index+1].y, coasterPoints[index+1].z, storeNorms[index].x, storeNorms[index].y, storeNorms[index].z);
   double scale = 0.003;
 
-    // gluLookAt(
-    //   coasterPoints[index].x + scale*storeNorms[index].x + 0.5*scaleVar*20*storeBinormals[index].x,
-    //   coasterPoints[index].y + scale*storeNorms[index].y + 0.5*scaleVar*20*storeBinormals[index].y,
-    //   coasterPoints[index].z + scale*storeNorms[index].z + 0.5*scaleVar*20*storeBinormals[index].z,
-    //   coasterPoints[index+1].x + scale*storeNorms[index+1].x + 0.5*scaleVar*20*storeBinormals[index+1].x, 
-    //   coasterPoints[index+1].y + scale*storeNorms[index+1].y + 0.5*scaleVar*20*storeBinormals[index+1].y, 
-    //   coasterPoints[index+1].z + scale*storeNorms[index+1].z + 0.5*scaleVar*20*storeBinormals[index+1].z, 
-    //   storeNorms[index].x, 
-    //   storeNorms[index].y, 
-    //   storeNorms[index].z
-    // );
+    gluLookAt(
+      coasterPoints[index].x + scale*storeNorms[index].x + 0.5*scaleVar*20*storeBinormals[index].x,
+      coasterPoints[index].y + scale*storeNorms[index].y + 0.5*scaleVar*20*storeBinormals[index].y,
+      coasterPoints[index].z + scale*storeNorms[index].z + 0.5*scaleVar*20*storeBinormals[index].z,
+      coasterPoints[index+1].x + scale*storeNorms[index+1].x + 0.5*scaleVar*20*storeBinormals[index+1].x, 
+      coasterPoints[index+1].y + scale*storeNorms[index+1].y + 0.5*scaleVar*20*storeBinormals[index+1].y, 
+      coasterPoints[index+1].z + scale*storeNorms[index+1].z + 0.5*scaleVar*20*storeBinormals[index+1].z, 
+      storeNorms[index].x, 
+      storeNorms[index].y, 
+      storeNorms[index].z
+    );
 
     std::cout << coasterPoints[index].x << " " << coasterPoints[index].y << " " << coasterPoints[index].z << std::endl;
 
@@ -558,10 +558,10 @@ void display(void) {
     mouseScale();
 
 
-    // glPushMatrix();
-    // glRotated(90, 1, 0, 0);  
-    // glCallList(skybox);
-    // glPopMatrix();
+    glPushMatrix();
+    glRotated(90, 1, 0, 0);  
+    glCallList(skybox);
+    glPopMatrix();
 
     glEnable(GL_LIGHTING);
     glPushMatrix();
@@ -592,18 +592,7 @@ void myinit()
     drawSideplanes();
   glEndList();
 
-    GLfloat mat_specular[] = { 1.0, 1.0, 1.0, 1.0 };
-    GLfloat mat_shininess[] = { 50.0 };
-    GLfloat light_position[] = { 1.0, 1.0, 1.0, 0.0 };
-    glClearColor (0.0, 0.0, 0.0, 0.0);
-
-    glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
-    glMaterialfv(GL_FRONT, GL_SHININESS, mat_shininess);
-    glLightfv(GL_LIGHT0, GL_POSITION, light_position);
-
-    glEnable(GL_LIGHTING);
-    glEnable(GL_LIGHT0);
-    glEnable(GL_DEPTH_TEST);
+  glEnable(GL_LIGHT0);
 
 }
 
