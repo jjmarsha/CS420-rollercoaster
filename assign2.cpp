@@ -588,7 +588,7 @@ void myinit()
   GLfloat position[] = {1,50,0,1};
   glMatrixMode(GL_MODELVIEW);
   glMaterialfv(GL_FRONT,GL_DIFFUSE,diffuse);
-  glLightfv(GL_LIGHT0,GL_POSITION, LightSource);
+  glLightfv(GL_LIGHT0,GL_POSITION, position);
   GLfloat LightSource[] = {0.2, 0.2, 0.2, 1.0};
   glLightfv(GL_LIGHT0,GL_AMBIENT,LightSource);
 
