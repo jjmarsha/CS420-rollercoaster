@@ -682,7 +682,7 @@ int main (int argc, char ** argv)
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
   glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 512, 512, 0, GL_RGB, GL_UNSIGNED_BYTE, planeData->pix);
   
-  glLightfv(GL_LIGHT0,GL_DIFFUSE,LightSource);
+  glLightfv(GL_LIGHT0,GL_AMBIENT,LightSource);
 
 
   glutInitDisplayMode(GLUT_DOUBLE | GLUT_DEPTH | GLUT_RGB);
