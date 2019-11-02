@@ -520,8 +520,8 @@ void display(void) {
   glMatrixMode(GL_MODELVIEW);
   GLfloat position[] = {16.0, 0.0, 0.0, 1.0};
 
-  // glMaterialfv(GL_FRONT,GL_DIFFUSE,position);
-  // glLightfv(GL_LIGHT0,GL_POSITION, position);
+  glMaterialfv(GL_FRONT,GL_DIFFUSE,position);
+  glLightfv(GL_LIGHT0,GL_POSITION, position);
   
 
 
