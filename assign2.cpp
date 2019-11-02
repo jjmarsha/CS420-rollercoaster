@@ -37,7 +37,7 @@ struct point {
 
 GLuint trackList;
 GLuint skybox;
-GLfloat LightSource[] = {10,0,0,1};
+GLfloat LightSource[] = {10,0,0,0};
 
 double scaleVar = 0.002;
 
