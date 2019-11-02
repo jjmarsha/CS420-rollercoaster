@@ -544,7 +544,7 @@ void display(void) {
 
 
     glPushMatrix();
-    glRotated(90, 0, 0, 1);  
+    glRotated(180, 0, 0, 1);  
     glCallList(skybox);
     glPopMatrix();
 
