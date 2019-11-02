@@ -37,7 +37,6 @@ struct point {
 
 GLuint trackList;
 GLuint skybox;
-GLfloat LightSource[] = {0.2, 0.2, 0.2, 1.0};
 
 double scaleVar = 0.002;
 
@@ -517,14 +516,7 @@ void display(void) {
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
   glLoadIdentity();
-  GLfloat diffuse[] = {0.8, 0.8, 0.8, 1.0};
-  GLfloat position[] = {0,1,0,1};
 
-
-  glMatrixMode(GL_MODELVIEW);
-
-  glMaterialfv(GL_FRONT,GL_DIFFUSE,diffuse);
-  glLightfv(GL_LIGHT0,GL_POSITION, LightSource);
 
 
   // gluLookAt(coasterPoints[index].x + 0.023*storeNorms[index].x, coasterPoints[index].y + 0.023*storeNorms[index].y, coasterPoints[index].z + 0.023*storeNorms[index].z, coasterPoints[index+1].x, coasterPoints[index+1].y, coasterPoints[index+1].z, storeNorms[index].x, storeNorms[index].y, storeNorms[index].z);
@@ -591,6 +583,14 @@ void myinit()
   glNewList(skybox, GL_COMPILE);
     drawSideplanes();
   glEndList();
+
+  GLfloat diffuse[] = {0.8, 0.8, 0.8, 1.0};
+  GLfloat position[] = {0,1,0,1};
+  glMatrixMode(GL_MODELVIEW);
+  glMaterialfv(GL_FRONT,GL_DIFFUSE,diffuse);
+  glLightfv(GL_LIGHT0,GL_POSITION, LightSource);
+  GLfloat LightSource[] = {0.2, 0.2, 0.2, 1.0};
+  glLightfv(GL_LIGHT0,GL_AMBIENT,LightSource);
 
   glEnable(GL_LIGHT0);
 
@@ -691,8 +691,6 @@ int main (int argc, char ** argv)
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
   glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 512, 512, 0, GL_RGB, GL_UNSIGNED_BYTE, planeData->pix);
   
-  glLightfv(GL_LIGHT0,GL_AMBIENT,LightSource);
-
 
   glutInitDisplayMode(GLUT_DOUBLE | GLUT_DEPTH | GLUT_RGB);
   glutDisplayFunc(display);
