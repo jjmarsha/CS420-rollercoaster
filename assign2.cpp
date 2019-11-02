@@ -432,14 +432,14 @@ void coaster() {
     glColor3f( 0.5, 0.5, 0.5);
 
     for(int i = 0; i < CoasterLength-1; i++) {
-        point v0 = calcVectorPoints(i, -1, 1, 0.001, 0);
-        point v1 = calcVectorPoints(i, 1, 1, 0.001, 0);
-        point v2 = calcVectorPoints(i, 1, -1, 0.001, 0);
-        point v3 = calcVectorPoints(i, -1, -1, 0.001, 0);
-        point v4 = calcVectorPoints(i+1, -1, 1, 0.001, 0);
-        point v5 = calcVectorPoints(i+1, 1, 1, 0.001, 0);
-        point v6 = calcVectorPoints(i+1, 1, -1, 0.001, 0);
-        point v7 = calcVectorPoints(i+1, -1, -1, 0.001, 0);
+        point v0 = calcVectorPoints(i, -1, 1, 0.002, 0);
+        point v1 = calcVectorPoints(i, 1, 1, 0.002, 0);
+        point v2 = calcVectorPoints(i, 1, -1, 0.002, 0);
+        point v3 = calcVectorPoints(i, -1, -1, 0.002, 0);
+        point v4 = calcVectorPoints(i+1, -1, 1, 0.002, 0);
+        point v5 = calcVectorPoints(i+1, 1, 1, 0.002, 0);
+        point v6 = calcVectorPoints(i+1, 1, -1, 0.002, 0);
+        point v7 = calcVectorPoints(i+1, -1, -1, 0.002, 0);
 
         glBegin(GL_QUADS);
           glVertex3f(v0.x, v0.y, v0.z);
@@ -468,14 +468,14 @@ void coaster() {
     }
 
     for(int i = 0; i < CoasterLength-1; i++) {
-        point v0 = calcVectorPoints(i, -1, 1, 0.001, 20);
-        point v1 = calcVectorPoints(i, 1, 1, 0.001, 20);
-        point v2 = calcVectorPoints(i, 1, -1, 0.001, 20);
-        point v3 = calcVectorPoints(i, -1, -1, 0.001, 20);
-        point v4 = calcVectorPoints(i+1, -1, 1, 0.001, 20);
-        point v5 = calcVectorPoints(i+1, 1, 1, 0.001, 20);
-        point v6 = calcVectorPoints(i+1, 1, -1, 0.001, 20);
-        point v7 = calcVectorPoints(i+1, -1, -1, 0.001, 20);
+        point v0 = calcVectorPoints(i, -1, 1, 0.002, 20);
+        point v1 = calcVectorPoints(i, 1, 1, 0.002, 20);
+        point v2 = calcVectorPoints(i, 1, -1, 0.002, 20);
+        point v3 = calcVectorPoints(i, -1, -1, 0.002, 20);
+        point v4 = calcVectorPoints(i+1, -1, 1, 0.002, 20);
+        point v5 = calcVectorPoints(i+1, 1, 1, 0.002, 20);
+        point v6 = calcVectorPoints(i+1, 1, -1, 0.002, 20);
+        point v7 = calcVectorPoints(i+1, -1, -1, 0.002, 20);
 
         glBegin(GL_QUADS);
           glVertex3f(v0.x, v0.y, v0.z);
