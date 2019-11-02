@@ -554,10 +554,10 @@ void display(void) {
     mouseScale();
 
 
-    // glPushMatrix();
-    // glRotated(90, 1, 0, 0);  
-    // glCallList(skybox);
-    // glPopMatrix();
+    glPushMatrix();
+    glRotated(90, 1, 0, 0);  
+    glCallList(skybox);
+    glPopMatrix();
 
     glEnable(GL_LIGHTING);
     glPushMatrix();
