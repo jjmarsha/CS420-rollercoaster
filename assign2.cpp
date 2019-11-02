@@ -381,12 +381,12 @@ point crossProduct(point vector1, point vector2) {
   return {x/magnitude, y/magnitude, z/magnitude};
 }
 
-  // point calcVectorPoints(int vectorIndex, double norm, double bi, double scale, double second) {
-  //     double x = coasterPoints[vectorIndex].x + scale*(norm*storeNorms[vectorIndex].x + bi*storeBinormals[vectorIndex].x) + scale*second*storeBinormals[vectorIndex].x;
-  //     double y = coasterPoints[vectorIndex].y + scale*(norm*storeNorms[vectorIndex].y + bi*storeBinormals[vectorIndex].y) +  scale*second*storeBinormals[vectorIndex].y;
-  //     double z = coasterPoints[vectorIndex].z + scale*(norm*storeNorms[vectorIndex].z + bi*storeBinormals[vectorIndex].z) + scale*second*storeBinormals[vectorIndex].z;
-  //     return {x, y, z};
-  // }
+  point calcVectorPoints(int vectorIndex, double norm, double bi, double scale, double second) {
+      double x = coasterPoints[vectorIndex].x + scale*(norm*storeNorms[vectorIndex].x + bi*storeBinormals[vectorIndex].x) + scale*second*storeBinormals[vectorIndex].x;
+      double y = coasterPoints[vectorIndex].y + scale*(norm*storeNorms[vectorIndex].y + bi*storeBinormals[vectorIndex].y) +  scale*second*storeBinormals[vectorIndex].y;
+      double z = coasterPoints[vectorIndex].z + scale*(norm*storeNorms[vectorIndex].z + bi*storeBinormals[vectorIndex].z) + scale*second*storeBinormals[vectorIndex].z;
+      return {x, y, z};
+  }
 
 void coaster() {
   glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
@@ -530,17 +530,17 @@ void display(void) {
   // gluLookAt(coasterPoints[index].x + 0.023*storeNorms[index].x, coasterPoints[index].y + 0.023*storeNorms[index].y, coasterPoints[index].z + 0.023*storeNorms[index].z, coasterPoints[index+1].x, coasterPoints[index+1].y, coasterPoints[index+1].z, storeNorms[index].x, storeNorms[index].y, storeNorms[index].z);
   double scale = 0.003;
 
-    gluLookAt(
-      coasterPoints[index].x + scale*storeNorms[index].x + 0.5*scaleVar*20*storeBinormals[index].x,
-      coasterPoints[index].y + scale*storeNorms[index].y + 0.5*scaleVar*20*storeBinormals[index].y,
-      coasterPoints[index].z + scale*storeNorms[index].z + 0.5*scaleVar*20*storeBinormals[index].z,
-      coasterPoints[index+1].x + scale*storeNorms[index+1].x + 0.5*scaleVar*20*storeBinormals[index+1].x, 
-      coasterPoints[index+1].y + scale*storeNorms[index+1].y + 0.5*scaleVar*20*storeBinormals[index+1].y, 
-      coasterPoints[index+1].z + scale*storeNorms[index+1].z + 0.5*scaleVar*20*storeBinormals[index+1].z, 
-      storeNorms[index].x, 
-      storeNorms[index].y, 
-      storeNorms[index].z
-    );
+    // gluLookAt(
+    //   coasterPoints[index].x + scale*storeNorms[index].x + 0.5*scaleVar*20*storeBinormals[index].x,
+    //   coasterPoints[index].y + scale*storeNorms[index].y + 0.5*scaleVar*20*storeBinormals[index].y,
+    //   coasterPoints[index].z + scale*storeNorms[index].z + 0.5*scaleVar*20*storeBinormals[index].z,
+    //   coasterPoints[index+1].x + scale*storeNorms[index+1].x + 0.5*scaleVar*20*storeBinormals[index+1].x, 
+    //   coasterPoints[index+1].y + scale*storeNorms[index+1].y + 0.5*scaleVar*20*storeBinormals[index+1].y, 
+    //   coasterPoints[index+1].z + scale*storeNorms[index+1].z + 0.5*scaleVar*20*storeBinormals[index+1].z, 
+    //   storeNorms[index].x, 
+    //   storeNorms[index].y, 
+    //   storeNorms[index].z
+    // );
 
     std::cout << coasterPoints[index].x << " " << coasterPoints[index].y << " " << coasterPoints[index].z << std::endl;
 
