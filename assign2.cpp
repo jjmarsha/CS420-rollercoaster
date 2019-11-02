@@ -585,7 +585,7 @@ void myinit()
   glEndList();
 
   GLfloat diffuse[] = {0.8, 0.8, 0.8, 1.0};
-  GLfloat position[] = {0,1,0,1};
+  GLfloat position[] = {1,50,0,1};
   glMatrixMode(GL_MODELVIEW);
   glMaterialfv(GL_FRONT,GL_DIFFUSE,diffuse);
   glLightfv(GL_LIGHT0,GL_POSITION, LightSource);
