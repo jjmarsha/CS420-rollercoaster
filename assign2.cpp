@@ -517,17 +517,17 @@ void display(void) {
   // gluLookAt(coasterPoints[index].x + 0.023*storeNorms[index].x, coasterPoints[index].y + 0.023*storeNorms[index].y, coasterPoints[index].z + 0.023*storeNorms[index].z, coasterPoints[index+1].x, coasterPoints[index+1].y, coasterPoints[index+1].z, storeNorms[index].x, storeNorms[index].y, storeNorms[index].z);
   double scale = 0.003;
 
-    // gluLookAt(
-    //   coasterPoints[index].x + scale*storeNorms[index].x + 0.5*0.001*20*storeBinormals[index].x,
-    //   coasterPoints[index].y + scale*storeNorms[index].y + 0.5*0.001*20*storeBinormals[index].y,
-    //   coasterPoints[index].z + scale*storeNorms[index].z + 0.5*0.001*20*storeBinormals[index].z,
-    //   coasterPoints[index+1].x + scale*storeNorms[index+1].x + 0.5*0.001*20*storeBinormals[index+1].x, 
-    //   coasterPoints[index+1].y + scale*storeNorms[index+1].y + 0.5*0.001*20*storeBinormals[index+1].y, 
-    //   coasterPoints[index+1].z + scale*storeNorms[index+1].z + 0.5*0.001*20*storeBinormals[index+1].z, 
-    //   storeNorms[index].x, 
-    //   storeNorms[index].y, 
-    //   storeNorms[index].z
-    // );
+    gluLookAt(
+      coasterPoints[index].x + scale*storeNorms[index].x + 0.5*0.001*20*storeBinormals[index].x,
+      coasterPoints[index].y + scale*storeNorms[index].y + 0.5*0.001*20*storeBinormals[index].y,
+      coasterPoints[index].z + scale*storeNorms[index].z + 0.5*0.001*20*storeBinormals[index].z,
+      coasterPoints[index+1].x + scale*storeNorms[index+1].x + 0.5*0.001*20*storeBinormals[index+1].x, 
+      coasterPoints[index+1].y + scale*storeNorms[index+1].y + 0.5*0.001*20*storeBinormals[index+1].y, 
+      coasterPoints[index+1].z + scale*storeNorms[index+1].z + 0.5*0.001*20*storeBinormals[index+1].z, 
+      storeNorms[index].x, 
+      storeNorms[index].y, 
+      storeNorms[index].z
+    );
 
   if(count%1 == 0) {
     index++;
